@@ -1,0 +1,52 @@
+site_name: 硬核读书
+site_description: 古典改革宗著作中译（公有领域原著）
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: 深色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: 浅色
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - footnotes
+  - attr_list
+  - tables
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+
+nav:
+  - 首页: index.md
+  - 书库:
+      - Magnalia Dei · 神的大作为:
+          - 目录: books/magnalia-dei/index.md
+          - 第一章　至高的善: books/magnalia-dei/01.md
+          - 第二章　认识神: books/magnalia-dei/02.md
+          - 第三章　普遍启示: books/magnalia-dei/03.md
+          - 第四章　普遍启示的价值: books/magnalia-dei/04.md
+          - 第五章　特殊启示（启示的方式）: books/magnalia-dei/05.md
+  - 版权: copyright.md
+
+copyright: 译文 CC BY-NC-SA · 源本公有领域
