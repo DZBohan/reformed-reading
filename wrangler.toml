@@ -1,4 +1,4 @@
-name = "hardcore-reading"
+name = "reformed-reading"
 compatibility_date = "2026-07-26"
 
 # 纯静态站：把 mkdocs build 产出的 ./site 作为静态资源部署（无 Worker 脚本）
