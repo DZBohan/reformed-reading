@@ -1,4 +1,4 @@
-# reformed-site
+# hardcore-reading
 
 古典改革宗译作的自建网站「硬核读书」——把 `reformed-translation` 项目翻译的书籍，做成可检索、可下载的**纯文本**静态网站。
 
@@ -12,7 +12,7 @@
 ## 目录结构
 
 ```
-reformed-site/
+hardcore-reading/
 ├── README.md            # 本文件
 ├── logs/                # 运行日志
 ├── mkdocs.yml           # 站点配置（导航/主题/搜索）
@@ -34,7 +34,7 @@ reformed-site/
 reformed-translation/books/<book>/zh/NN.md   (译文)
         │  复制/软链
         ▼
-reformed-site/docs/books/<book>/NN.md
+hardcore-reading/docs/books/<book>/NN.md
         │  git push → GitHub
         ▼
 Cloudflare Pages 自动构建 (mkdocs build) → 部署 → xxx.pages.dev
