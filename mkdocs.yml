@@ -1,5 +1,6 @@
 site_name: 硬核读书
 site_description: 古典改革宗著作中译（公有领域原著）
+site_url: https://reformedreadingchinese.com
 
 theme:
   name: material
