@@ -1,0 +1,30 @@
+/* ============================================================
+   脚注区排版兜底
+   问题：Material 主题在个别脚注条目间会出现"多一道空白"的视觉空隙
+   （HTML 结构逐字节验证一致，属主题 CSS/换行层怪现象，跨设备表现不一）。
+   办法：强制统一脚注列表的行高、条目与段落边距，消除不一致的纵向空隙。
+   记录：2026-07-27 ch9/ch10 排查后加入。
+   ============================================================ */
+
+.md-typeset .footnote > ol {
+  margin: 0;
+}
+
+.md-typeset .footnote > ol > li {
+  margin: 0 0 0.4em 0 !important;
+  padding: 0 !important;
+}
+
+.md-typeset .footnote > ol > li:last-child {
+  margin-bottom: 0 !important;
+}
+
+.md-typeset .footnote > ol > li > p {
+  margin: 0 !important;
+  line-height: 1.7 !important;
+}
+
+/* 返回箭头与前一字符绑定，避免单独换行造成的空档 */
+.md-typeset .footnote-backref {
+  white-space: nowrap;
+}
