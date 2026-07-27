@@ -1,27 +1,26 @@
 /* ============================================================
    脚注区排版兜底
-   问题：Material 主题在个别脚注条目间会出现"多一道空白"的视觉空隙
-   （HTML 结构逐字节验证一致，属主题 CSS/段落外边距/换行层怪现象）。
-   办法：把每条脚注段落的外边距清零、行高统一，纵向间距只由 li 的
-        margin-bottom 控制，从而消除不一致的空隙。
-
-   ⚠️ 绝不要覆盖 li 的 margin-left！Material 默认 li{margin-left:1.25em}，
-      脚注序号(尤其两位数 10/11/12)就摆在这段左边距里；一旦归零，手机窄屏
-      上序号会被裁成 0/1/2。所以下面只动 margin-bottom / 段落 margin / line-height。
-   记录：2026-07-27 ch9/ch10 排查后加入并修订。
+   两个问题一并处理：
+   (1) 空隙：Material 在个别脚注条目间会出现"多一道空白"的视觉空隙
+       → 把段落外边距清零、行高统一，纵向间距只由 li 的 margin-bottom 控制。
+   (2) 两位数序号被裁：Material 默认 li{margin-left:1.25em} 给序号的空间
+       不够放两位数（10/11/12 的十位被裁成 0/1/2，手机窄屏尤明显）；
+       → 把脚注 li 的左边距加宽到 2.2em，足够容两位数序号。
+   记录：2026-07-27 ch9/ch10 排查后加入并多次修订。
    ============================================================ */
 
-.md-typeset .footnote > ol > li > p {
-  margin: 0 !important;
-  line-height: 1.7 !important;
-}
-
 .md-typeset .footnote > ol > li {
+  margin-left: 2.2em !important;   /* 加宽序号空间，容两位数(10/11/12) */
   margin-bottom: 0.4em !important;
 }
 
 .md-typeset .footnote > ol > li:last-child {
   margin-bottom: 0 !important;
+}
+
+.md-typeset .footnote > ol > li > p {
+  margin: 0 !important;
+  line-height: 1.7 !important;
 }
 
 /* 返回箭头与前一字符绑定，避免单独换行造成的空档 */
