@@ -74,8 +74,13 @@ Cloudflare 自动构建（pip install + mkdocs build）→ npx wrangler deploy
 
 源本为公有领域（Bavinck 荷文原著 1909）；译文为原创作品，以 **CC BY-NC-SA** 授权。现代英译本仍有版权，本站不使用，均自公有领域原文译出。详见 `docs/copyright.md`。
 
+## 自定义样式
+
+`docs/stylesheets/extra.css`（挂在 `mkdocs.yml` 的 `extra_css`）：脚注区排版兜底——隐藏隐形占位的返回箭头、加宽两位数序号空间、统一条目行高/间距。**勿删；勿覆盖脚注 li 的 margin-left（序号空间）**。来龙去脉见 `logs/2026-07-27-footnote-typesetting-fixes.md`。
+
 ## 状态
 
 - **已上线**，绑定自有域名 reformedreadingchinese.com。
-- Magnalia Dei：**24 章已上线 1–5 章**（至高的善 / 认识神 / 普遍启示 / 普遍启示的价值 / 特殊启示·方式），其余待译。
-- 翻译在 `reformed-translation` 项目进行；每译几章 push 一次，网站自动更新。
+- Magnalia Dei：**24 章已上线 1–10 章**（至高的善 / 认识神 / 普遍启示 / 普遍启示的价值 / 特殊启示·方式 / 特殊启示·内容 / 圣经 / 圣经与信条 / 神的本质 / 三位一体的神），其余待译。
+- 经文编号一律按**和合本**；与原著（荷文 SV 版数）不同处、及疑似误引处，均以**章末脚注**标注（详见 `reformed-translation` 的 CONVENTIONS）。
+- 翻译在 `reformed-translation` 项目进行；每译几章 push 一次，Cloudflare 自动 `mkdocs build` 部署。
