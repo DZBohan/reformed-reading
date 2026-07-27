@@ -1,16 +1,27 @@
 /* ============================================================
-   脚注区排版兜底
-   两个问题一并处理：
-   (1) 空隙：Material 在个别脚注条目间会出现"多一道空白"的视觉空隙
-       → 把段落外边距清零、行高统一，纵向间距只由 li 的 margin-bottom 控制。
-   (2) 两位数序号被裁：Material 默认 li{margin-left:1.25em} 给序号的空间
-       不够放两位数（10/11/12 的十位被裁成 0/1/2，手机窄屏尤明显）；
-       → 把脚注 li 的左边距加宽到 2.2em，足够容两位数序号。
-   记录：2026-07-27 ch9/ch10 排查后加入并多次修订。
+   脚注区排版兜底（2026-07-27 ch9/ch10 排查后加入，多次修订）
+
+   已解决的三类问题：
+   (1) 条目间"多一道空白"：根因是 Material 的返回箭头 ↩(.footnote-backref)
+       默认 opacity:0(隐形) 却 display:inline-block 占约 0.8rem 布局空间，
+       窄屏(手机)时被挤到下一行，就成了"隐形元素独占的空行"。
+       → 直接隐藏返回箭头(默认本就隐形、需悬停才现，手机不可用；
+         隐藏后脚注跳转功能不受影响，正文上标仍可跳到注释)。
+   (2) 两位数序号被裁(10/11/12→0/1/2)：Material 脚注 ol margin 归0，
+       序号仅靠 li margin-left:1.25em，不够两位数 → 加宽到 2.2em。
+   (3) 段落外边距不齐导致的纵向间距不匀：清零段落 margin、统一行高，
+       纵向间距只由 li margin-bottom 控制。
+   ⚠️ 勿覆盖 li 的 margin-left（那是序号空间，归0会致序号被裁）。
    ============================================================ */
 
+/* (1) 隐藏返回箭头，消除隐形占位导致的换行空隙 */
+.md-typeset .footnote-backref {
+  display: none !important;
+}
+
+/* (2) 加宽序号空间，容两位数序号 */
 .md-typeset .footnote > ol > li {
-  margin-left: 2.2em !important;   /* 加宽序号空间，容两位数(10/11/12) */
+  margin-left: 2.2em !important;
   margin-bottom: 0.4em !important;
 }
 
@@ -18,12 +29,8 @@
   margin-bottom: 0 !important;
 }
 
+/* (3) 清零段落外边距、统一行高，纵向间距只由 li margin-bottom 控制 */
 .md-typeset .footnote > ol > li > p {
   margin: 0 !important;
   line-height: 1.7 !important;
-}
-
-/* 返回箭头与前一字符绑定，避免单独换行造成的空档 */
-.md-typeset .footnote-backref {
-  white-space: nowrap;
 }
