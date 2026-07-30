@@ -1,4 +1,4 @@
-# reformed-reading (硬核读书 · Hardcore Reading)
+# reformed-reading
 
 A self-hosted static site publishing **Chinese translations of classic Reformed works**, all
 translated from **public-domain originals**. Text-first: readable, searchable, no reader accounts,
