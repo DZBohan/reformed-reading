@@ -1,86 +1,118 @@
-# reformed-reading（硬核读书）
+# reformed-reading (硬核读书 · Hardcore Reading)
 
-古典改革宗译作的自建网站「**硬核读书**」——把 `reformed-translation` 项目翻译的书籍，做成可检索、可阅读的**纯文本**静态网站。
+A self-hosted static site publishing **Chinese translations of classic Reformed works**, all
+translated from **public-domain originals**. Text-first: readable, searchable, no reader accounts,
+no paywall, no JavaScript required to read a chapter.
 
-🔗 **线上地址：https://reformedreadingchinese.com** （亦可 https://reformed-reading.bohanzh6.workers.dev）
-📦 源码：https://github.com/DZBohan/reformed-reading
+> **Note on language:** the site content is in **Chinese**. This README is in English so the
+> tooling and licensing are legible to anyone who lands here; the books themselves are not
+> translated into English.
 
-## 技术栈
+🔗 **Live: https://reformedreadingchinese.com** (also https://reformed-reading.bohanzh6.workers.dev)
+📦 Source: https://github.com/DZBohan/reformed-reading
 
-- **MkDocs + Material 主题**：章节树导航、全文搜索（中英）、深浅色、移动端适配
-- **托管：Cloudflare Workers（静态资源）**——`wrangler.toml` 里 `[assets] directory = "./site"`，全球 CDN、自动 HTTPS
-- **源码：GitHub**，Cloudflare 连仓库自动构建部署
-- **域名**：reformedreadingchinese.com（Cloudflare Registrar）
+## Current contents
 
-## 目录结构
+**Herman Bavinck, *Magnalia Dei*** (Dutch original, 1909) — **chapters 1–10 of 24 published**:
+the highest good · knowing God · general revelation · the value of general revelation ·
+special revelation (mode) · special revelation (content) · Scripture · Scripture and the creeds ·
+the being of God · the triune God. The rest are in progress.
+
+Scripture references follow the **Chinese Union Version (和合本)** numbering throughout. Where
+that differs from the original's Dutch Statenvertaling numbering — or where the original appears
+to misquote — the difference is recorded in an **end-of-chapter footnote** (see `CONVENTIONS` in
+the `reformed-translation` project).
+
+## Stack
+
+- **MkDocs + Material theme** — chapter-tree navigation, full-text search (Chinese and English),
+  light/dark mode, mobile layout
+- **Hosting: Cloudflare Workers** (static assets) — `wrangler.toml` sets
+  `[assets] directory = "./site"`; global CDN, automatic HTTPS
+- **Source: GitHub** — Cloudflare builds and deploys straight from the repo
+- **Domain**: reformedreadingchinese.com (Cloudflare Registrar)
+
+## Layout
 
 ```
 reformed-reading/
-├── README.md            # 本文件
-├── logs/                # 运行日志
-├── mkdocs.yml           # 站点配置（站名/导航/主题/搜索/site_url）
-├── wrangler.toml        # Cloudflare Workers 部署配置（把 ./site 当静态资源）
-├── requirements.txt     # 构建依赖（mkdocs-material）
-├── .gitignore           # 忽略 site/ .venv/
-└── docs/                # 站点内容（markdown）
-    ├── index.md         # 首页
-    ├── copyright.md     # 版权/授权
+├── README.md            # this file
+├── logs/                # engineering notes / change history
+├── mkdocs.yml           # site config (name / nav / theme / search / site_url)
+├── wrangler.toml        # Cloudflare Workers config (serves ./site as static assets)
+├── requirements.txt     # build dependency (mkdocs-material)
+├── .gitignore           # ignores site/ and .venv/
+└── docs/                # site content (markdown)
+    ├── index.md         # home
+    ├── copyright.md     # copyright / licensing
+    ├── stylesheets/
+    │   └── extra.css    # footnote typography overrides (see warning below)
     └── books/
         └── magnalia-dei/
-            ├── index.md # 书籍首页（简介 + 24 章目录表）
-            └── NN.md    # 各章（从 reformed-translation 译文填入）
+            ├── index.md # book home (introduction + 24-chapter table of contents)
+            └── NN.md    # one file per chapter, filled from reformed-translation
 ```
 
-## 内容来源与流程（全自动）
+## Content pipeline (fully automated after push)
 
 ```
-reformed-translation/books/<book>/zh/NN.md   (译文，逐章)
-        │  复制到本仓库
+reformed-translation/books/<book>/zh/NN.md     translated chapter
+        │  copied into this repo
         ▼
-reformed-reading/docs/books/<book>/NN.md      (+ CC 页脚)
-        │  更新 index.md 目录表状态 + mkdocs.yml 导航
+reformed-reading/docs/books/<book>/NN.md       (+ CC footer)
+        │  update the TOC status table in index.md and the nav in mkdocs.yml
         │  git push → GitHub
         ▼
-Cloudflare 自动构建（pip install + mkdocs build）→ npx wrangler deploy
+Cloudflare builds (pip install + mkdocs build) → npx wrangler deploy
         ▼
-几分钟内自动上线 https://reformedreadingchinese.com
+live within minutes at https://reformedreadingchinese.com
 ```
 
-每章页面：中文正文 + 页脚（原著出处 + CC BY-NC-SA）。
+Every chapter page is Chinese body text plus a footer naming the source edition and the license.
 
-## 本地预览 / 构建
+Translation itself happens in the separate `reformed-translation` project; this repo is the
+publishing layer. A push every few chapters is enough — Cloudflare handles the rest.
 
-依赖已装在 `.venv/`（用系统 python3 建的 venv，非 uv）。
+## Local preview and build
+
+Dependencies live in `.venv/` (a plain `python3 -m venv`, not uv).
 
 ```bash
-.venv/bin/mkdocs serve      # 本地预览 http://127.0.0.1:8000
-.venv/bin/mkdocs build      # 构建静态站 → ./site
+.venv/bin/mkdocs serve      # preview at http://127.0.0.1:8000
+.venv/bin/mkdocs build      # build the static site → ./site
 ```
 
-## Cloudflare 部署设置（Workers · 已配好）
+## Cloudflare deployment settings (Workers · already configured)
 
-连仓库时填（已完成，供参考/重连用）：
+Recorded here for reference and in case the repo ever needs reconnecting:
 
-| 项 | 值 |
-|----|----|
+| Setting | Value |
+|---------|-------|
 | Production branch | `main` |
 | Build command | `pip install -r requirements.txt && mkdocs build` |
 | Deploy command | `npx wrangler deploy` |
 | Build variable | `PYTHON_VERSION = 3.11` |
 
-`wrangler.toml` 指定 `./site` 为静态资源；push 到 main 即自动构建部署。
+`wrangler.toml` designates `./site` as the static asset directory. Pushing to `main` triggers
+build and deploy automatically.
 
-## 版权
+## Custom stylesheet — please read before editing
 
-源本为公有领域（Bavinck 荷文原著 1909）；译文为原创作品，以 **CC BY-NC-SA** 授权。现代英译本仍有版权，本站不使用，均自公有领域原文译出。详见 `docs/copyright.md`。
+`docs/stylesheets/extra.css` (wired in via `extra_css` in `mkdocs.yml`) fixes footnote
+typography: it hides the invisible placeholder back-arrow, widens the marker column so
+two-digit footnote numbers are not clipped, and normalises item line-height and spacing.
 
-## 自定义样式
+> ⚠️ **Do not delete it, and do not override `margin-left` on footnote `li`** — that margin is
+> what reserves room for the number. Removing it clips footnotes 10+ on narrow screens.
+> Background and the failed attempts that preceded the fix:
+> `logs/2026-07-27-footnote-typesetting-fixes.md`.
 
-`docs/stylesheets/extra.css`（挂在 `mkdocs.yml` 的 `extra_css`）：脚注区排版兜底——隐藏隐形占位的返回箭头、加宽两位数序号空间、统一条目行高/间距。**勿删；勿覆盖脚注 li 的 margin-left（序号空间）**。来龙去脉见 `logs/2026-07-27-footnote-typesetting-fixes.md`。
+## Copyright
 
-## 状态
+The **source texts are public domain** (Bavinck's Dutch original, 1909). Modern English
+translations remain under copyright and are **not** used here — everything is translated directly
+from the public-domain original.
 
-- **已上线**，绑定自有域名 reformedreadingchinese.com。
-- Magnalia Dei：**24 章已上线 1–10 章**（至高的善 / 认识神 / 普遍启示 / 普遍启示的价值 / 特殊启示·方式 / 特殊启示·内容 / 圣经 / 圣经与信条 / 神的本质 / 三位一体的神），其余待译。
-- 经文编号一律按**和合本**；与原著（荷文 SV 版数）不同处、及疑似误引处，均以**章末脚注**标注（详见 `reformed-translation` 的 CONVENTIONS）。
-- 翻译在 `reformed-translation` 项目进行；每译几章 push 一次，Cloudflare 自动 `mkdocs build` 部署。
+The **Chinese translations are original work**, released under
+**[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)**. See
+`docs/copyright.md` for details.
