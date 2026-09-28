@@ -37,7 +37,8 @@
 ## 构建环境
 
 - `.venv/` 是普通 `python3 -m venv`，不是 uv
-- `requirements.txt` 锁定了 `mkdocs==1.6.1` 与 `mkdocs-material==9.7.7`（2026-09-28）。
-  （mkdocs-material 本身已限 `mkdocs<2`；MkDocs 2.0 据 Material 官方说不兼容，别手动升。）
-  升级要本地先构建、看过脚注排版再改
+- `requirements.txt` **锁死**了 `mkdocs==1.6.1` 与 `mkdocs-material==9.7.7`（2026-09-28 用户定）。
+  ⚠️ **构建失败 / 推送后线上不更新时，先怀疑是锁版本老化**（Cloudflare 换了 Python、老包装不上）。
+  症状对照、定位方法和手动升级步骤见 `logs/2026-09-28-pin-build-deps.md`。
+  升级必须本地先构建，并在手机窄屏宽度下看过脚注排版再改。
 - 托管用的是 **Cloudflare Workers 静态资源**（`wrangler.toml`），不是 Pages

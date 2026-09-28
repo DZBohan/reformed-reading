@@ -40,7 +40,7 @@ reformed-reading/
 ├── logs/                # engineering notes / change history
 ├── mkdocs.yml           # site config (name / nav / theme / search / site_url)
 ├── wrangler.toml        # Cloudflare Workers config (serves ./site as static assets)
-├── requirements.txt     # build dependency (mkdocs-material)
+├── requirements.txt     # build dependencies, pinned exactly (see logs/2026-09-28-pin-build-deps.md)
 ├── .gitignore           # ignores site/ and .venv/
 └── docs/                # site content (markdown)
     ├── index.md         # home

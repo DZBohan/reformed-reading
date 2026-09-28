@@ -1,2 +1,4 @@
+# Pinned exactly on purpose (2026-09-28). If the Cloudflare build breaks, suspect these first:
+# symptoms, diagnosis and upgrade steps are in logs/2026-09-28-pin-build-deps.md
 mkdocs==1.6.1
 mkdocs-material==9.7.7
