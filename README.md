@@ -13,10 +13,10 @@ no paywall, no JavaScript required to read a chapter.
 
 ## Current contents
 
-**Herman Bavinck, *Magnalia Dei*** (Dutch original, 1909) — **chapters 1–10 of 24 published**:
+**Herman Bavinck, *Magnalia Dei*** (Dutch original, 1909) — **chapters 1–11 of 24 published**:
 the highest good · knowing God · general revelation · the value of general revelation ·
 special revelation (mode) · special revelation (content) · Scripture · Scripture and the creeds ·
-the being of God · the triune God. The rest are in progress.
+the being of God · the triune God · creation and providence. The rest are in progress.
 
 Scripture references follow the **Chinese Union Version (和合本)** numbering throughout. Where
 that differs from the original's Dutch Statenvertaling numbering — or where the original appears
